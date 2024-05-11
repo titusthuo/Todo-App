@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    createUserWithEmailAndPassword
-} from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
 import "./welcome.css";
-import TodoSVG from '../assets/todo-svg.svg'
 
 export default function Welcome() {
     const [email, setEmail] = useState("");
@@ -19,7 +14,10 @@ export default function Welcome() {
         password: "",
         confirmPassword: ""
     });
-
+    const [resetEmail, setResetEmail] = useState("");
+    const [resetPasswordSent, setResetPasswordSent] = useState(false);
+    const [isResettingPassword, setIsResettingPassword] = useState(false);
+    const [resetPasswordMode, setResetPasswordMode] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,19 +46,35 @@ export default function Welcome() {
 
     const handleRegister = () => {
         if (registerInformation.email !== registerInformation.confirmEmail) {
-            alert("Please confirm that email are the same");
+            alert("Please confirm that emails are the same");
             return;
-        } else if (
-            registerInformation.password !== registerInformation.confirmPassword
-        ) {
-            alert("Please confirm that password are the same");
+        } else if (registerInformation.password !== registerInformation.confirmPassword) {
+            alert("Please confirm that passwords are the same");
             return;
         }
-        createUserWithEmailAndPassword(
-                auth,
-                registerInformation.email,
-                registerInformation.password
-            )
+        createUserWithEmailAndPassword(auth, registerInformation.email, registerInformation.password)
+            .then(() => {
+                navigate("/homepage");
+            })
+            .catch((err) => alert(err.message));
+    };
+
+    const handleResetPassword = () => {
+        setIsResettingPassword(true);
+        sendPasswordResetEmail(auth, resetEmail)
+            .then(() => {
+                setResetPasswordSent(true);
+            })
+            .catch((error) => {
+                console.error("Error sending reset password email:", error.message);
+            })
+            .finally(() => {
+                setIsResettingPassword(false);
+            });
+    };
+
+    const handleSignInWithNewPassword = () => {
+        signInWithEmailAndPassword(auth, resetEmail, password)
             .then(() => {
                 navigate("/homepage");
             })
@@ -69,9 +83,6 @@ export default function Welcome() {
 
     return ( <
         div className = "welcome" >
-        <
-        img src = { TodoSVG }
-        className = "todo-svg" / >
         <
         h1 > Todo - List < /h1> <
         div className = "login-register-container" > {
@@ -126,9 +137,8 @@ export default function Welcome() {
                 onClick = { handleRegister } > Register < /button> <
                 button className = "create-account-button"
                 onClick = {
-                    () => setIsRegistering(false)
-                } > Have an account ? Go back < /button> < /
-                >
+                    () => setIsRegistering(false) } > Have an account ? Go back < /button> <
+                />
             ) : ( <
                 >
                 <
@@ -149,14 +159,70 @@ export default function Welcome() {
                 /button> <
                 button className = "create-account-button"
                 onClick = {
-                    () => setIsRegistering(true)
-                } >
+                    () => setIsRegistering(true) } >
                 Create an account <
-                /button> < /
+                /button> <
+                />
+            )
+        }
+
+        {
+            resetPasswordMode ? ( <
+                > {
+                    resetPasswordSent ? ( <
+                        >
+                        <
+                        p style = {
+                            { fontSize: "1.5em", fontWeight: "bold", color: "red" } } > Check your email to reset your password. < /p>
+
+                        <
+                        input type = "email"
+                        placeholder = "Enter your email"
+                        value = { resetEmail }
+                        onChange = {
+                            (e) => setResetEmail(e.target.value) }
+                        /> <
+                        input type = "password"
+                        placeholder = "Enter your new password"
+                        value = { password }
+                        onChange = {
+                            (e) => setPassword(e.target.value) }
+                        /> <
+                        button className = "sign-in-register-button"
+                        onClick = { handleSignInWithNewPassword } >
+                        Sign In with New Password <
+                        /button> <
+                        />
+                    ) : ( <
+                        >
+                        <
+                        input type = "email"
+                        placeholder = "Enter your email"
+                        value = { resetEmail }
+                        onChange = {
+                            (e) => setResetEmail(e.target.value) }
+                        /> <
+                        button className = "reset-password-button"
+                        onClick = { handleResetPassword }
+                        disabled = {!resetEmail || isResettingPassword } >
+                        { isResettingPassword ? "Resetting..." : "Reset Password" } <
+                        /button> <
+                        />
+                    )
+                } <
+                />
+            ) : ( <
                 >
+                <
+                button className = "create-account-button"
+                onClick = {
+                    () => setResetPasswordMode(true) } >
+                Forgot Password ? Reset Your Password <
+                /button> <
+                />
             )
         } <
-        /div> < /
-        div >
+        /div> <
+        /div>
     );
 }

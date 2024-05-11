@@ -1,7 +1,9 @@
 .homepage {
     height: 100vh;
-    weight: 100vw;
-    background: linear-gradient(122.19deg, #20da20 1.89%, #2a00d5 113.56%);
+    width: 100vw;
+    background-image: url('C:\Users\titus thuo\Downloads\background2.jpg');
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -80,4 +82,18 @@
 
 .logout-icon:hover {
     background-color: #0056b3;
+}
+
+@media screen and (max-width: 768px) {
+    .add-confirm-icon {
+        right: 20px;
+    }
+    .todo>h1 {
+        width: auto;
+        max-width: 90%;
+    }
+    .logout-icon {
+        bottom: 20px;
+        right: 20px;
+    }
 }

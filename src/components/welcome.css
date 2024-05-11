@@ -2,7 +2,9 @@
 .welcome {
     height: 100vh;
     width: 100vw;
-    background: linear-gradient(122.19deg, #20da2c 1.89%, #2a00d5 113.56%);
+    background-image: url('C:\Users\titus thuo\Downloads\background1.jpg');
+    background-size: cover;
+    background-position: center;
     position: relative;
     overflow: hidden;
 }
@@ -10,10 +12,11 @@
 .welcome>h1 {
     font-family: "Changa One";
     font-weight: normal;
-    font-size: 144px;
-    left: 46px;
-    top: 155px;
+    font-size: 135px;
     position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
     color: white;
 }
 
@@ -24,9 +27,10 @@
     justify-content: center;
     flex-direction: column;
     padding: 20px 50px;
-    left: 150px;
-    top: 360px;
-    background: #ffffff;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.7);
 }
 
 .login-register-container>input {
@@ -56,13 +60,51 @@
 }
 
 .create-account-button {
-    background: none;
+    background: linear-gradient(122.19deg, #20da45 1.89%, #ff5733 113.56%);
+    font-size: 20px;
     margin-top: 10px;
+    font-family: "Changa One";
+    font-weight: normal;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-.todo-svg {
-    position: absolute;
-    bottom: 100px;
-    right: 300px;
-    transform: scale(1.3);
+.reset-password-button {
+    background-color: #ff5733;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reset-password-button:hover {
+    background-color: #d5000b;
+}
+
+@media screen and (max-width: 768px) {
+    .login-register-container {
+        padding: 10px;
+    }
+    .login-register-container>input {
+        width: 100%;
+        font-size: 20px;
+    }
+    .create-account-button {
+        font-size: 16px;
+    }
+    .reset-password-button {
+        font-size: 14px;
+    }
+    .todo-svg {
+        top: 50%;
+        right: 20px;
+        left: 10px;
+    }
 }
