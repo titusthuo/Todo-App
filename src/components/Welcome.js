@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
+import backgroundImage from "../assets/background1.jpg";
 import "./welcome.css";
 
 export default function Welcome() {
@@ -82,7 +83,10 @@ export default function Welcome() {
     };
 
     return ( <
-        div className = "welcome" >
+        div className = "welcome"
+        style = {
+            { backgroundImage: `url(${backgroundImage})` }
+        } >
         <
         h1 > Todo - List < /h1> <
         div className = "login-register-container" > {
@@ -137,8 +141,9 @@ export default function Welcome() {
                 onClick = { handleRegister } > Register < /button> <
                 button className = "create-account-button"
                 onClick = {
-                    () => setIsRegistering(false) } > Have an account ? Go back < /button> <
-                />
+                    () => setIsRegistering(false)
+                } > Have an account ? Go back < /button> < /
+                >
             ) : ( <
                 >
                 <
@@ -159,40 +164,43 @@ export default function Welcome() {
                 /button> <
                 button className = "create-account-button"
                 onClick = {
-                    () => setIsRegistering(true) } >
+                    () => setIsRegistering(true)
+                } >
                 Create an account <
-                /button> <
-                />
+                /button> < /
+                >
             )
-        }
-
-        {
+        } { /* Reset password functionality */ } {
             resetPasswordMode ? ( <
-                > {
+                >
+                {
                     resetPasswordSent ? ( <
                         >
                         <
                         p style = {
-                            { fontSize: "1.5em", fontWeight: "bold", color: "red" } } > Check your email to reset your password. < /p>
+                            { fontSize: "1.5em", fontWeight: "bold", color: "red" }
+                        } > Check your email to reset your password. < /p>
 
                         <
                         input type = "email"
                         placeholder = "Enter your email"
                         value = { resetEmail }
                         onChange = {
-                            (e) => setResetEmail(e.target.value) }
+                            (e) => setResetEmail(e.target.value)
+                        }
                         /> <
                         input type = "password"
                         placeholder = "Enter your new password"
                         value = { password }
                         onChange = {
-                            (e) => setPassword(e.target.value) }
+                            (e) => setPassword(e.target.value)
+                        }
                         /> <
                         button className = "sign-in-register-button"
                         onClick = { handleSignInWithNewPassword } >
                         Sign In with New Password <
-                        /button> <
-                        />
+                        /button> < /
+                        >
                     ) : ( <
                         >
                         <
@@ -200,14 +208,14 @@ export default function Welcome() {
                         placeholder = "Enter your email"
                         value = { resetEmail }
                         onChange = {
-                            (e) => setResetEmail(e.target.value) }
+                            (e) => setResetEmail(e.target.value)
+                        }
                         /> <
                         button className = "reset-password-button"
                         onClick = { handleResetPassword }
-                        disabled = {!resetEmail || isResettingPassword } >
-                        { isResettingPassword ? "Resetting..." : "Reset Password" } <
-                        /button> <
-                        />
+                        disabled = {!resetEmail || isResettingPassword } > { isResettingPassword ? "Resetting..." : "Reset Password" } <
+                        /button> < /
+                        >
                     )
                 } <
                 />
@@ -216,13 +224,14 @@ export default function Welcome() {
                 <
                 button className = "create-account-button"
                 onClick = {
-                    () => setResetPasswordMode(true) } >
+                    () => setResetPasswordMode(true)
+                } >
                 Forgot Password ? Reset Your Password <
-                /button> <
-                />
+                /button> < /
+                >
             )
         } <
-        /div> <
-        /div>
+        /div> < /
+        div >
     );
 }
