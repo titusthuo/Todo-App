@@ -101,9 +101,7 @@
     .reset-password-button {
         font-size: 14px;
     }
-    .todo-svg {
-        top: 50%;
-        right: 20px;
-        left: 10px;
+    .welcome>h1 {
+        font-size: 80px;
     }
 }

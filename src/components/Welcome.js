@@ -142,8 +142,7 @@ export default function Welcome() {
                 button className = "create-account-button"
                 onClick = {
                     () => setIsRegistering(false)
-                } > Have an account ? Go back < /button> < /
-                >
+                } > Have an account ? Go back < /button> < / >
             ) : ( <
                 >
                 <
@@ -167,8 +166,7 @@ export default function Welcome() {
                     () => setIsRegistering(true)
                 } >
                 Create an account <
-                /button> < /
-                >
+                /button> < / >
             )
         } { /* Reset password functionality */ } {
             resetPasswordMode ? ( <
@@ -199,8 +197,7 @@ export default function Welcome() {
                         button className = "sign-in-register-button"
                         onClick = { handleSignInWithNewPassword } >
                         Sign In with New Password <
-                        /button> < /
-                        >
+                        /button> < / >
                     ) : ( <
                         >
                         <
@@ -214,8 +211,7 @@ export default function Welcome() {
                         button className = "reset-password-button"
                         onClick = { handleResetPassword }
                         disabled = {!resetEmail || isResettingPassword } > { isResettingPassword ? "Resetting..." : "Reset Password" } <
-                        /button> < /
-                        >
+                        /button> < / >
                     )
                 } <
                 />
@@ -227,8 +223,7 @@ export default function Welcome() {
                     () => setResetPasswordMode(true)
                 } >
                 Forgot Password ? Reset Your Password <
-                /button> < /
-                >
+                /button> < / >
             )
         } <
         /div> < /
